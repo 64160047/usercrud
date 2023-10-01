@@ -16,7 +16,7 @@ import javax.swing.table.AbstractTableModel;
 public class UserPanel extends javax.swing.JPanel {
 
     private final UserService userService;
-    private final List<User> list;
+    private List<User> list;
     private User editedUser;
 
     /**
@@ -344,8 +344,16 @@ public class UserPanel extends javax.swing.JPanel {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         setFromToObject();
         enableForm(false);
+        userService.addNew(editedUser);
+        refreshTable();
       
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void refreshTable() {
+        list = userService.getUsers();
+        tblUser.revalidate();
+        tblUser.repaint();
+    }
 
     private void setFromToObject() {
         editedUser.setLogin(edtLogin.getText());
