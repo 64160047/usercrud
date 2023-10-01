@@ -164,6 +164,11 @@ public class UserPanel extends javax.swing.JPanel {
 
         btnSave.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -336,6 +341,19 @@ public class UserPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnAddActionPerformed
 
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+       editedUser.setLogin(edtLogin.getText());
+       editedUser.setName(edtName.getText());
+       editedUser.setPassword(new String(edtPassword.getPassword()));
+       if(rbtMale.isSelected()) {
+            editedUser.setGender("M");
+       }else {
+            editedUser.setGender("F");
+       }
+       editedUser.setRole(cmbRole.getSelectedIndex());
+      
+    }//GEN-LAST:event_btnSaveActionPerformed
+
     private void setObjectToForm() {
         edtLogin.setText(editedUser.getLogin());
         edtName.setText(editedUser.getName());
@@ -348,6 +366,7 @@ public class UserPanel extends javax.swing.JPanel {
         }
         cmbRole.setSelectedIndex(editedUser.getRole());
     }
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
