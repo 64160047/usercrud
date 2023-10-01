@@ -7,6 +7,7 @@ package com.werapan.databaseproject.ui;
 import com.werapan.databaseproject.model.User;
 import com.werapan.databaseproject.service.UserService;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -161,6 +162,11 @@ public class UserPanel extends javax.swing.JPanel {
 
         btnClear.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         btnSave.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnSave.setText("Save");
@@ -280,6 +286,11 @@ public class UserPanel extends javax.swing.JPanel {
 
         btnDelete.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -372,6 +383,26 @@ public class UserPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnEditActionPerformed
 
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        int selectIndex = tblUser.getSelectedRow();
+        if (selectIndex >= 0) {
+            editedUser = list.get(selectIndex);
+            int input = JOptionPane.showConfirmDialog(this, "Do you want to proceed?", "Select an Option...",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+            if(input==0) {
+                userService.delete(editedUser);
+            }
+            refreshTable();
+        }
+
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        enableForm(false);
+        editedUser = null;
+
+    }//GEN-LAST:event_btnClearActionPerformed
+
     private void refreshTable() {
         list = userService.getUsers();
         tblUser.revalidate();
@@ -433,6 +464,14 @@ public class UserPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void enableForm(boolean status) {
+        if(status == false) {
+            edtLogin.setText("");
+            edtName.setText("");
+            edtPassword.setText("");
+            rbtMale.setSelected(true);
+            cmbRole.setSelectedIndex(0);
+        }
+
         edtLogin.setEnabled(status);
         edtName.setEnabled(status);
         edtPassword.setEnabled(status);
