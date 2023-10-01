@@ -28,5 +28,10 @@ public class UserService {
         return userDao.getAll(" user_login asc");  
     }
 
+    public User addNew(User editedUser) {
+         UserDao userDao = new UserDao();
+         return userDao.save(editedUser);
+    }
+
   
 }
