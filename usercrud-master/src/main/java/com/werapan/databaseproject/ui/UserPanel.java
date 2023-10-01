@@ -4,17 +4,71 @@
  */
 package com.werapan.databaseproject.ui;
 
+import com.werapan.databaseproject.model.User;
+import com.werapan.databaseproject.service.UserService;
+import java.util.List;
+import javax.swing.table.AbstractTableModel;
+
 /**
  *
  * @author minnie
  */
 public class UserPanel extends javax.swing.JPanel {
 
+    private final UserService userService;
+    private final List<User> list;
+
     /**
      * Creates new form UserPanel
      */
     public UserPanel() {
         initComponents();
+        userService = new UserService();
+        list = userService.getUsers();
+        tblUser.setModel(new AbstractTableModel() {
+            String[] columnNames = {"ID","Login","Name","Password","Gender","Role"};
+            @Override
+            public String getColumnName(int column) {
+                return columnNames[column];
+            }
+            @Override
+            public int getRowCount() {
+                return list.size();
+                
+            }             
+
+            @Override
+            public int getColumnCount() {
+                return 6;
+                
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                User user = list.get(rowIndex);
+              switch (columnIndex) {
+                    case 0:
+                        return user.getId();
+                    case 1:
+                        return user.getLogin();
+                    case 2:
+                        return user.getName();
+                    case 3:
+                        return user.getPassword();
+                    case 4:
+                        return user.getGender();
+                    case 5:
+                        return user.getRole();
+                    default:
+                        return "Unknow";
+                }
+
+                
+            }
+
+            
+            
+        });
     }
 
     /**
@@ -45,7 +99,7 @@ public class UserPanel extends javax.swing.JPanel {
         btnClear = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblUser = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
@@ -64,7 +118,7 @@ public class UserPanel extends javax.swing.JPanel {
         jLabel4.setText(" :");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel5.setText("Login :");
+        jLabel5.setText("login :");
 
         edtLogin.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         edtLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -74,7 +128,7 @@ public class UserPanel extends javax.swing.JPanel {
         });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel6.setText("Name :");
+        jLabel6.setText("name :");
 
         edtName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         edtName.addActionListener(new java.awt.event.ActionListener() {
@@ -84,7 +138,7 @@ public class UserPanel extends javax.swing.JPanel {
         });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel7.setText("Password :");
+        jLabel7.setText("password :");
 
         edtPassword.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
@@ -145,7 +199,7 @@ public class UserPanel extends javax.swing.JPanel {
                                 .addComponent(rbtMale)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(rbtFeamle)))
-                        .addContainerGap(112, Short.MAX_VALUE))
+                        .addContainerGap(113, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSave)
@@ -185,8 +239,8 @@ public class UserPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        jTable1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblUser.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tblUser.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -197,7 +251,7 @@ public class UserPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblUser);
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -290,8 +344,8 @@ public class UserPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JRadioButton rbtFeamle;
     private javax.swing.JRadioButton rbtMale;
+    private javax.swing.JTable tblUser;
     // End of variables declaration//GEN-END:variables
 }
