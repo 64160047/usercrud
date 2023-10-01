@@ -108,7 +108,7 @@ public class UserPanel extends javax.swing.JPanel {
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
 
-        jPanel1.setBackground(new java.awt.Color(218, 198, 198));
+        jPanel1.setBackground(new java.awt.Color(225, 210, 204));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("ID :");
@@ -118,7 +118,6 @@ public class UserPanel extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel4.setText(" :");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("login :");
@@ -266,7 +265,7 @@ public class UserPanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tblUser);
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel2.setBackground(new java.awt.Color(227, 226, 208));
 
         btnAdd.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnAdd.setText("Add");
