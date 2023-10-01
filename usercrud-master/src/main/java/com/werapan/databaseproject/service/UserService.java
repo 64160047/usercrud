@@ -13,7 +13,7 @@ import java.util.List;
  * @author werapan
  */
 public class UserService {
-    public User login(String login, String password) {
+   public User login(String login, String password) {
         UserDao userDao = new UserDao();
         User user = userDao.getByLogin(login);
         if(user != null && user.getPassword().equals(password)) {
@@ -21,10 +21,12 @@ public class UserService {
         }
         return null;
     }
+
     
-    public List<User> getUsers() {
+   public List<User>getUsers() {
         UserDao userDao = new UserDao();
-        return userDao.getAll("name asc");
+        return userDao.getAll(" user_login asc");  
     }
+
   
 }
