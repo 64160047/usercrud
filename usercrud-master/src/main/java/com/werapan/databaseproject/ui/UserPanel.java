@@ -69,6 +69,8 @@ public class UserPanel extends javax.swing.JPanel {
             
             
         });
+        
+        enableForm(false);
     }
 
     /**
@@ -93,7 +95,7 @@ public class UserPanel extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         edtPassword = new javax.swing.JPasswordField();
         rbtMale = new javax.swing.JRadioButton();
-        rbtFeamle = new javax.swing.JRadioButton();
+        rbtFemale = new javax.swing.JRadioButton();
         jLabel8 = new javax.swing.JLabel();
         cmbRole = new javax.swing.JComboBox<>();
         btnClear = new javax.swing.JButton();
@@ -147,9 +149,9 @@ public class UserPanel extends javax.swing.JPanel {
         rbtMale.setSelected(true);
         rbtMale.setText("Male");
 
-        btnGender.add(rbtFeamle);
-        rbtFeamle.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        rbtFeamle.setText("Female");
+        btnGender.add(rbtFemale);
+        rbtFemale.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        rbtFemale.setText("Female");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel8.setText("Role :");
@@ -198,7 +200,7 @@ public class UserPanel extends javax.swing.JPanel {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(rbtMale)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(rbtFeamle)))
+                                .addComponent(rbtFemale)))
                         .addContainerGap(113, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -225,7 +227,7 @@ public class UserPanel extends javax.swing.JPanel {
                     .addComponent(jLabel7)
                     .addComponent(edtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rbtMale)
-                    .addComponent(rbtFeamle))
+                    .addComponent(rbtFemale))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -344,8 +346,20 @@ public class UserPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JRadioButton rbtFeamle;
+    private javax.swing.JRadioButton rbtFemale;
     private javax.swing.JRadioButton rbtMale;
     private javax.swing.JTable tblUser;
     // End of variables declaration//GEN-END:variables
+
+    private void enableForm(boolean status) {
+        edtLogin.setEnabled(status);
+        edtName.setEnabled(status);
+        edtPassword.setEnabled(status);
+        btnSave.setEnabled(status);
+        btnClear.setEnabled(status);
+        rbtMale.setEnabled(status);
+        rbtFemale.setEnabled(status);
+        cmbRole.setEnabled(status);
+        
+    }
 }
