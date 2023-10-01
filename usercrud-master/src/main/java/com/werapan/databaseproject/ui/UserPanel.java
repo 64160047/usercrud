@@ -347,20 +347,29 @@ public class UserPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        setFromToObject();
-        enableForm(false);
-        userService.addNew(editedUser);
-        refreshTable();
-      
+        if (editedUser.getId() < 0) { //Add new
+            setFromToObject();
+            enableForm(false);
+            userService.addNew(editedUser);
+            refreshTable();
+        } else {
+            setFromToObject();
+            enableForm(false);
+            userService.update(editedUser);
+            refreshTable();
+        }
+
+
+
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-      int selectedIndex = tblUser.getSelectedRow();
-      if(selectedIndex >= 0) {
-          editedUser = list.get(selectedIndex);
-          setObjectToForm();
-          enableForm(true);
-      }
+        int selectedIndex = tblUser.getSelectedRow();
+        if (selectedIndex >= 0) {
+            editedUser = list.get(selectedIndex);
+            setObjectToForm();
+            enableForm(true);
+        }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void refreshTable() {
@@ -373,12 +382,13 @@ public class UserPanel extends javax.swing.JPanel {
         editedUser.setLogin(edtLogin.getText());
         editedUser.setName(edtName.getText());
         editedUser.setPassword(new String(edtPassword.getPassword()));
-        if(rbtMale.isSelected()) {
+        if (rbtMale.isSelected()) {
             editedUser.setGender("M");
-        }else {
+        } else {
             editedUser.setGender("F");
         }
         editedUser.setRole(cmbRole.getSelectedIndex());
+
     }
 
     private void setObjectToForm() {
@@ -387,13 +397,12 @@ public class UserPanel extends javax.swing.JPanel {
         edtPassword.setText(editedUser.getPassword());
         if (editedUser.getGender().equals("M")) {
             rbtMale.setSelected(true);
-            
-        }else {
+        } else {
             rbtFemale.setSelected(true);
         }
         cmbRole.setSelectedIndex(editedUser.getRole());
+
     }
-    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -433,7 +442,6 @@ public class UserPanel extends javax.swing.JPanel {
         rbtFemale.setEnabled(status);
         cmbRole.setEnabled(status);
         edtLogin.requestFocus();
-        
 
     }
 }

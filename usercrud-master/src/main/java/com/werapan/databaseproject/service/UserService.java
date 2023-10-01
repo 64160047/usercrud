@@ -33,5 +33,10 @@ public class UserService {
          return userDao.save(editedUser);
     }
 
+    public User update(User editedUser) {
+        UserDao userDao = new UserDao();
+        return userDao.update(editedUser);
+    }
+
   
 }
