@@ -272,6 +272,11 @@ public class UserPanel extends javax.swing.JPanel {
 
         btnEdit.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnEdit.setText("Edit");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
 
         btnDelete.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnDelete.setText("Delete");
@@ -348,6 +353,15 @@ public class UserPanel extends javax.swing.JPanel {
         refreshTable();
       
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+      int selectedIndex = tblUser.getSelectedRow();
+      if(selectedIndex >= 0) {
+          editedUser = list.get(selectedIndex);
+          setObjectToForm();
+          enableForm(true);
+      }
+    }//GEN-LAST:event_btnEditActionPerformed
 
     private void refreshTable() {
         list = userService.getUsers();
