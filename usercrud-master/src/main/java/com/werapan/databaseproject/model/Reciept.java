@@ -4,6 +4,8 @@
  */
 package com.werapan.databaseproject.model;
 
+import com.werapan.databaseproject.dao.CustomerDao;
+import com.werapan.databaseproject.dao.UserDao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
@@ -23,6 +25,8 @@ public class Reciept {
         private int totalQty;
         private int userId;
         private int customerId;
+        private User user;
+        private Customer customer;
 
     public Reciept(int id, Date createdDate, float total, float cash, int totalQty, int userId, int customerId) {
         this.id = id;
@@ -121,12 +125,32 @@ public class Reciept {
         this.customerId = customerId;
     }
 
-    
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        this.userId = user.getId();
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+        this.customerId = customer.getId();
+    }
 
     @Override
     public String toString() {
-        return "Reciept{" + "id=" + id + ", created_date=" + createdDate + ", total=" + total + ", cash=" + cash + ", total_qty=" + totalQty + ", user_id=" + userId + ", customer_id=" + customerId + '}';
+        return "Reciept{" + "id=" + id + ", createdDate=" + createdDate + ", total=" + total + ", cash=" + cash + ", totalQty=" + totalQty + ", userId=" + userId + ", customerId=" + customerId + ", user=" + user + ", customer=" + customer + '}';
     }
+
+    
+
+    
 
    
 
@@ -140,6 +164,15 @@ public class Reciept {
             reciept.setTotal(rs.getInt("total_qty"));
             reciept.setUserId(rs.getInt("user_id"));
             reciept.setCustomerId(rs.getInt("customer_id"));
+            //Population
+            CustomerDao customerDao = new CustomerDao();
+            UserDao userDao = new UserDao();
+            Customer customer = customerDao.get(reciept.getCustomerId());
+            User user = userDao.get(reciept.getUserId());
+            reciept.setCustomer(customer);
+            reciept.setUser(user);
+            
+            
             
             
             
