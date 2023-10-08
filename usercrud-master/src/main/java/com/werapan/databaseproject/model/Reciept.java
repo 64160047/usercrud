@@ -42,6 +42,17 @@ public class Reciept {
         this.userId = userId;
         this.customerId = customerId;
     }
+    
+      public Reciept(float total, float cash, int totalQty, int userId, int customerId) {
+        this.id = -1;
+        this.createdDate = null;
+        this.total = total;
+        this.cash = cash;
+        this.totalQty = totalQty;
+        this.userId = userId;
+        this.customerId = customerId;
+    }
+
 
     
      public Reciept() {
@@ -123,7 +134,7 @@ public class Reciept {
         Reciept reciept = new Reciept();
         try {
             reciept.setId(rs.getInt("reciept_id"));
-            reciept.setCreatedDate(rs.getDate("reciept_id"));
+            reciept.setCreatedDate(rs.getTimestamp("created_date"));
             reciept.setTotal(rs.getFloat("total"));
             reciept.setCash(rs.getFloat("cash"));
             reciept.setTotal(rs.getInt("total_qty"));
