@@ -8,6 +8,7 @@ import com.werapan.databaseproject.dao.CustomerDao;
 import com.werapan.databaseproject.dao.UserDao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,16 +18,16 @@ import java.util.logging.Logger;
  * @author werapan
  */
 public class Reciept {
-    
-        private int id;    
-        private Date createdDate;
-        private float total;
-        private float cash;
-        private int totalQty;
-        private int userId;
-        private int customerId;
-        private User user;
-        private Customer customer;
+    private int id;
+    private Date createdDate;
+    private float total;
+    private float cash;
+    private int totalQty;
+    private int  userId;
+    private int customerId;
+    private User user;
+    private Customer customer;
+    private ArrayList<RecieptDetail> recieptDetails= new ArrayList();
 
     public Reciept(int id, Date createdDate, float total, float cash, int totalQty, int userId, int customerId) {
         this.id = id;
@@ -37,7 +38,8 @@ public class Reciept {
         this.userId = userId;
         this.customerId = customerId;
     }
-    public Reciept( Date createdDate, float total, float cash, int totalQty, int userId, int customerId) {
+
+    public Reciept(Date createdDate, float total, float cash, int totalQty, int userId, int customerId) {
         this.id = -1;
         this.createdDate = createdDate;
         this.total = total;
@@ -46,18 +48,17 @@ public class Reciept {
         this.userId = userId;
         this.customerId = customerId;
     }
-    
-      public Reciept(float total, float cash, int totalQty, int userId, int customerId) {
+    public Reciept( float cash, int userId, int customerId) {
         this.id = -1;
         this.createdDate = null;
-        this.total = total;
+        this.total = 0;
         this.cash = cash;
-        this.totalQty = totalQty;
+        this.totalQty = 0;
         this.userId = userId;
         this.customerId = customerId;
     }
 
-
+    
     
      public Reciept() {
         this.id = -1;
@@ -125,6 +126,7 @@ public class Reciept {
         this.customerId = customerId;
     }
 
+
     public User getUser() {
         return user;
     }
@@ -143,28 +145,59 @@ public class Reciept {
         this.customerId = customer.getId();
     }
 
-    @Override
-    public String toString() {
-        return "Reciept{" + "id=" + id + ", createdDate=" + createdDate + ", total=" + total + ", cash=" + cash + ", totalQty=" + totalQty + ", userId=" + userId + ", customerId=" + customerId + ", user=" + user + ", customer=" + customer + '}';
+    public ArrayList<RecieptDetail> getRecieptDetails() {
+        return recieptDetails;
     }
 
+    public void setRecieptDetails(ArrayList recieptDetails) {
+        this.recieptDetails = recieptDetails;
+    }
+
+    @Override
+    public String toString() {
+        return "Reciept{" + "id=" + id + ", createdDate=" + createdDate + ", total=" + total + ", cash=" + cash + ", totalQty=" + totalQty + ", userId=" + userId + ", customerId=" + customerId + ", user=" + user + ", customer=" + customer + ", recieptDetails=" + recieptDetails + '}';
+    }
     
+    public void addRecieptDetail(RecieptDetail recieptDetail) {
+        recieptDetails.add(recieptDetail);
+        calculateTotal();
+    }
+    
+    public void delRecieptDetail(RecieptDetail recieptDetail) {
+        recieptDetails.remove(recieptDetail);
+        calculateTotal();
+    }
+    
+    private void calculateTotal() {
+        int totalQty = 0;
+        float total = 0.0f;
+        for(RecieptDetail rd: recieptDetails) {
+            total += rd.getTotalPrice();
+            totalQty += rd.getQty();
+        }
+        this.totalQty = totalQty;
+         this.total = total;
+       
+    }
+
+
+
+
+  
 
     
-
-   
-
     public static Reciept fromRS(ResultSet rs) {
         Reciept reciept = new Reciept();
         try {
             reciept.setId(rs.getInt("reciept_id"));
-            reciept.setCreatedDate(rs.getTimestamp("created_date"));
+            reciept.setCreatedDate(rs.getTimestamp("crated_date"));
             reciept.setTotal(rs.getFloat("total"));
             reciept.setCash(rs.getFloat("cash"));
-            reciept.setTotal(rs.getInt("total_qty"));
+            reciept.setTotalQty(rs.getInt("total_qty"));
             reciept.setUserId(rs.getInt("user_id"));
             reciept.setCustomerId(rs.getInt("customer_id"));
-            //Population
+            
+            // Poppulation
             CustomerDao customerDao = new CustomerDao();
             UserDao userDao = new UserDao();
             Customer customer = customerDao.get(reciept.getCustomerId());
@@ -172,17 +205,12 @@ public class Reciept {
             reciept.setCustomer(customer);
             reciept.setUser(user);
             
-            
-            
-            
-            
-            
-            
-
         } catch (SQLException ex) {
             Logger.getLogger(Reciept.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
         return reciept;
     }
+
 }
+

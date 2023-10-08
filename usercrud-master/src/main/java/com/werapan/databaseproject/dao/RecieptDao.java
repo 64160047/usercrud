@@ -6,6 +6,7 @@ package com.werapan.databaseproject.dao;
 
 import com.werapan.databaseproject.helper.DatabaseHelper;
 import com.werapan.databaseproject.model.Reciept;
+import com.werapan.databaseproject.model.RecieptDetail;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,6 +21,7 @@ import java.util.List;
  */
 public class RecieptDao implements Dao<Reciept> {
 
+   
     @Override
     public Reciept get(int id) {
         Reciept reciept = null;
@@ -32,6 +34,9 @@ public class RecieptDao implements Dao<Reciept> {
 
             while (rs.next()) {
                 reciept = Reciept.fromRS(rs);
+                RecieptDetailDao rdd = new RecieptDetailDao();
+                ArrayList<RecieptDetail> recieptDetails = (ArrayList<RecieptDetail>) rdd.getAll(" reciept_id="+ reciept.getId(), " reciept_detail_id");
+                reciept.setRecieptDetails(recieptDetails);
             }
 
         } catch (SQLException ex) {
@@ -39,6 +44,7 @@ public class RecieptDao implements Dao<Reciept> {
         }
         return reciept;
     }
+
 
     
 
@@ -61,6 +67,8 @@ public class RecieptDao implements Dao<Reciept> {
         }
         return list;
     }
+
+
     
     @Override
     public List<Reciept> getAll(String where, String order) {
@@ -82,9 +90,11 @@ public class RecieptDao implements Dao<Reciept> {
         }
         return list;
     }
+
+
     
 
-    public List<Reciept> getAll(String order) {
+     public List<Reciept> getAll(String order) {
         ArrayList<Reciept> list = new ArrayList();
         String sql = "SELECT * FROM reciept  ORDER BY" + order;
         Connection conn = DatabaseHelper.getConnect();
@@ -104,11 +114,13 @@ public class RecieptDao implements Dao<Reciept> {
         return list;
     }
 
-    @Override
+
+
+   @Override
     public Reciept save(Reciept obj) {
 
-        String sql = "INSERT INTO reciept (total,cash,total_qty,user_id,customer_id)"
-                + "VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO reciept (total, cash, total_qty, user_id, customer_id)"
+                + "VALUES(?, ?, ?, ?, ?)";
         Connection conn = DatabaseHelper.getConnect();
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -117,17 +129,19 @@ public class RecieptDao implements Dao<Reciept> {
             stmt.setInt(3, obj.getTotalQty());
             stmt.setInt(4, obj.getUserId());
             stmt.setInt(5, obj.getCustomerId());
-        
+
 //            System.out.println(stmt);
             stmt.executeUpdate();
             int id = DatabaseHelper.getInsertedId(stmt);
             obj.setId(id);
+            
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return null;
         }
         return obj;
     }
+
 
     @Override
     public Reciept update(Reciept obj) {
@@ -143,7 +157,7 @@ public class RecieptDao implements Dao<Reciept> {
             stmt.setInt(4, obj.getUserId());
             stmt.setInt(5, obj.getCustomerId());
             stmt.setInt(6, obj.getId());
-           
+
 //            System.out.println(stmt);
             int ret = stmt.executeUpdate();
             System.out.println(ret);
@@ -153,6 +167,8 @@ public class RecieptDao implements Dao<Reciept> {
             return null;
         }
     }
+
+
 
     @Override
     public int delete(Reciept obj) {
@@ -166,7 +182,9 @@ public class RecieptDao implements Dao<Reciept> {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        return -1;        
+        return -1;
     }
+
+
 
 }
