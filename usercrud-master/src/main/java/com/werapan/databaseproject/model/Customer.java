@@ -65,12 +65,17 @@ public class Customer {
         this.tel = tel;
     }
 
+    @Override
+    public String toString() {
+        return "Customer{" + "id=" + id + ", name=" + name + ", tel=" + tel + '}';
+    }
+
     public static Customer fromRS(ResultSet rs) {
         Customer user = new Customer();
         try {
             user.setId(rs.getInt("customer_id"));
             user.setName(rs.getString("customer_name"));
-            user.setName(rs.getString("customer_tel"));
+            user.setTel(rs.getString("customer_tel"));
           
         } catch (SQLException ex) {
             Logger.getLogger(Customer.class.getName()).log(Level.SEVERE, null, ex);
